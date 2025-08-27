@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icon.png" />
+    <title>WhisperNet</title>
+    <style>
+         :root {
+            color-scheme: light dark
+        }
+        
+        * {
+            box-sizing: border-box
+        }
+        
+        html,
+        body {
+            height: 100%
+        }
+        
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+            display: grid;
+            place-items: start center;
+            background: canvas;
+            color: canvastext
+        }
+        
+        .container {
+            width: min(920px, 95vw);
+            padding: 24px;
+            display: grid;
+            gap: 16px
+        }
+        
+        h1 {
+            margin: 0 0 8px
+        }
+        
+        .card {
+            border: 1px solid color-mix(in oklab, canvastext 20%, transparent);
+            border-radius: 12px;
+            padding: 16px;
+            background: color-mix(in oklab, canvas 92%, canvastext 8%)
+        }
+        
+        .grid {
+            display: grid;
+            gap: 12px
+        }
+        
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px
+        }
+        
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 120px
+        }
+        
+        footer {
+            opacity: .7;
+            font-size: .9rem;
+            margin-top: 8px
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: #10b981;
+            color: white;
+            font-size: .75rem
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>WhisperNet</h1>
+            <p class="badge">Offline SOS via sound</p>
+        </header>
+
+        <section class="card grid">
+            <h2>Transmit</h2>
+            <textarea id="txText" placeholder="Type message (e.g., SOS, contact, medical info)"></textarea>
+            <div class="controls">
+                <button id="btnChirp">Chirp</button>
+                <label>Rate <input id="symbolRate" type="number" min="50" max="2000" value="400" /></label>
+                <label>F0 <input id="f0" type="number" min="2000" max="10000" value="3200" /></label>
+                <label>F1 <input id="f1" type="number" min="2000" max="10000" value="4200" /></label>
+                <label>Volume <input id="txVolume" type="range" min="0" max="1" step="0.05" value="0.6" /> <span id="txVolVal">0.60</span></label>
+            </div>
+        </section>
+
+        <section class="card grid">
+            <h2>Receive</h2>
+            <div class="controls">
+                <button id="btnListen">Start Listening</button>
+                <button id="btnStop" disabled>Stop</button>
+            </div>
+            <div class="controls">
+                <label>Mic level <progress id="level" max="1" value="0" style="width:240px"></progress></label>
+            </div>
+            <pre id="rxLog" style="white-space:pre-wrap"></pre>
+        </section>
+
+        <footer>
+            Works offline. No internet required. Keep volume moderate for best range.
+        </footer>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js');
+        }
+    </script>
+</body>
+
+</html>

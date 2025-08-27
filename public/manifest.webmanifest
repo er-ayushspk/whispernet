@@ -1,0 +1,11 @@
+{
+    "name": "WhisperNet",
+    "short_name": "WhisperNet",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#111827",
+    "icons": [
+        { "src": "/icon.png", "sizes": "192x192", "type": "image/png" }
+    ]
+}
